@@ -26,4 +26,8 @@ kubectl get pod
 # nginx-deployment-77d8468669-76scr   1/1     Running   0          113s
 # nginx-deployment-77d8468669-hxxn9   1/1     Running   0          6s
 
+
+# clean resources
+kubectl delete -f nginx-deployment.yaml
+
 ```
