@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: mokhs00/boaz-k8s-sample-user
+          ports:
+            - containerPort: 8080
+          env:
+            - name: REDIS_HOST
+              value: "user-redis"
+            - name: REDIS_PORT
+              value: "6379"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  selector:
+    app: user
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-redis
+  labels:
+    app: user
+spec:
+  selector:
+    matchLabels:
+      app: user-redis
+  template:
+    metadata:
+      labels:
+        app: user-redis
+    spec:
+      containers:
+        - name: user-redis
+          image: redis
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-redis
+  labels:
+    app: user
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+  selector:
+    app: user-redis
