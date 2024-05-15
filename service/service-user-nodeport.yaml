@@ -18,6 +18,11 @@ spec:
           image: mokhs00/boaz-k8s-sample-user
           ports:
             - containerPort: 8080
+          env:
+            - name: REDIS_HOST
+              value: "user-redis" # kubernetes internal DNS를 이용
+            - name: REDIS_PORT
+              value: "6379"
 
 ---
 
@@ -34,7 +39,7 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30080
+      nodePort: 30080 # 30080 port로 접근할 수 있도록 nodePort open
       protocol: TCP
 
 ---
@@ -62,6 +67,7 @@ spec:
               protocol: TCP
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:

@@ -20,7 +20,7 @@ spec:
             - containerPort: 8080
           env:
             - name: REDIS_HOST
-              value: "user-redis"
+              value: "user-redis" # kubernetes internal DNS를 이용
             - name: REDIS_PORT
               value: "6379"
 
@@ -65,6 +65,7 @@ spec:
               protocol: TCP
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
