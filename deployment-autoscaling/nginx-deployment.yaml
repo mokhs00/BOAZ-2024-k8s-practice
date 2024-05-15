@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx-deployment
 spec:
-  replicas: 2
+  replicas: 2 # pod가 2개 유지되도록
   selector:
     matchLabels:
       app: nginx-deployment
