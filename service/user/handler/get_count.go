@@ -14,12 +14,6 @@ type GetCountResponse struct {
 func GetCountHandler(c echo.Context, redisClient *redis.Client) error {
 	ctx := c.Request().Context()
 
-	if redisClient == nil {
-		return c.JSON(500, &response.ErrorResponse{
-			Message: "redisClient 연결에 실패했습니다.",
-		})
-	}
-
 	count := redisClient.Incr(ctx, "count")
 	if count.Err() != nil {
 		return c.JSON(500, &response.ErrorResponse{

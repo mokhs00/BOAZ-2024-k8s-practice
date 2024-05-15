@@ -27,8 +27,7 @@ func main() {
 	ctx, cancelFunc := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancelFunc()
 	if err := redisClient.Ping(ctx).Err(); err != nil {
-		e.Logger.Errorf("failed to connect to redis: %v", err)
-		redisClient = nil
+		e.Logger.Fatalf("failed to connect to redis: %v", err)
 	}
 
 	e.GET("/users/:id", handler.GetUserHandler)
